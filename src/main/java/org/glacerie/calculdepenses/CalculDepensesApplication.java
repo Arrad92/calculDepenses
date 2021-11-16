@@ -2,6 +2,8 @@ package org.glacerie.calculdepenses;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class CalculDepensesApplication {
@@ -10,4 +12,7 @@ public class CalculDepensesApplication {
         SpringApplication.run(CalculDepensesApplication.class, args);
     }
 
+    @Bean public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
