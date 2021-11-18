@@ -1,6 +1,7 @@
 import axios from "axios";
+import {host} from '../././const.js'
 
-const API_URL = "http://localhost:8080/User/";
+const API_URL = host+"User/";
 
 export const AuthenticationService = ()=>{
     const login = (username,password)=>{
@@ -10,8 +11,8 @@ export const AuthenticationService = ()=>{
         password
       })
       .then(response => {
-        if (response.data.token) {
-          localStorage.setItem("user", JSON.stringify(response.data.token));
+        if (response.data) {
+          localStorage.setItem("user",JSON.stringify({token:response.data.replace('{token:','').replace('}','').trim()}) );
         }
 
         return response.data;

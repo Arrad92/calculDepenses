@@ -1,0 +1,1 @@
+export const host = "https://calculdepenses.herokuapp.com/";

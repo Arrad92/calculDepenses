@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -30,6 +30,8 @@ import Phone1 from './../../../../assets/images/widget/PHONE1.jpg';
 import Phone2 from './../../../../assets/images/widget/PHONE2.jpg';
 import Phone3 from './../../../../assets/images/widget/PHONE3.jpg';
 import Phone4 from './../../../../assets/images/widget/PHONE4.jpg';
+import { useAuthed } from '../../../../hooks/useAuthed';
+import { ProductService } from '../../../../services/product.service';
 
 const useStyles = makeStyles({
     table: {
@@ -54,6 +56,14 @@ const rows = [
 
 export default function LatestorderCard() {
     const classes = useStyles();
+    const [rows,setRows] = useState([]);
+    const authed = useAuthed();
+    const productService = ProductService();
+    useEffect(()=>{
+        if(authed){
+            productService.listProducts().then(setRows);
+        }
+    },[authed])
 
     return (
         <Grid container spacing={gridSpacing}>
@@ -86,14 +96,14 @@ export default function LatestorderCard() {
                                         
                                         return (
                                         <TableRow key={index}>
-                                            <TableCell>{row.customer}</TableCell>
-                                            <TableCell>{row.cid}</TableCell>
+                                            <TableCell>{row.id}</TableCell>
+                                            <TableCell>{row.nom}</TableCell>
                                             <TableCell>
-                                                <CardMedia component="img" image={row.photo} title="image" className={classes.imgproduct} />
+                                            {row.type}
                                             </TableCell>
-                                            <TableCell>{row.product}</TableCell>
-                                            <TableCell>{row.quantity}</TableCell>
-                                            <TableCell>{row.date}</TableCell>
+                                            <TableCell>{row.marque}</TableCell>
+                                            <TableCell>{row.prix}</TableCell>
+                                            <TableCell>{row.unite}</TableCell>
                                             {/* <TableCell>
                                                 <Chip color={row.statuscolor} label={row.status} size="small" />
                                             </TableCell> */}
