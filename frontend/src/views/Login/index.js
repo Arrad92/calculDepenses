@@ -4,7 +4,7 @@ import { Card, CardContent, Divider, Typography, makeStyles, Grid, TextField, Bu
 import { Link,useHistory } from 'react-router-dom';
 import { Field, Form, useForm } from 'react-final-form';
 
-import Logo from './../../assets/images/logo-dark.svg';
+import Logo from './../../assets/images/exphandle.png';
 import { AuthenticationService } from '../../services/auth.service';
 import { useDispatch } from 'react-redux';
 
@@ -76,7 +76,7 @@ const Login = () => {
                                     </Grid>
                                     <Grid item>
                                         <RouterLink to="/" className={classes.icon}>
-                                            <img alt="Auth method" src={Logo} />
+                                            <img alt="Auth method" src={Logo} style={{width:'170px'}} />
                                         </RouterLink>
                                     </Grid>
                                 </Grid>

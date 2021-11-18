@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -15,9 +15,9 @@ const store = createStore(reducer);
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter basename={config.basename}>
+        <HashRouter basename={config.basename}>
             <App />
-        </BrowserRouter>
+        </HashRouter>
     </Provider>,
     document.getElementById('root')
 );
