@@ -140,7 +140,7 @@ const Routes = () => {
                         <MainLayout>
                             <Switch location={location} key={location.pathname}>
                                 <NavMotion>
-                                    <Route path="/application/login" component={AuthLogin} />
+                                    {/* <Route path="/application/login" component={AuthLogin} /> */}
                                     <Route path="/application/register" component={Price} />
                                     <Route path="/register" component={Price} />
                                     <Route path="/application/forgot-password" component={Price} />
@@ -148,7 +148,10 @@ const Routes = () => {
                                     <Route path="/pages/error/error1" component={Price} />
                                     <Route path="/pages/error/error2" component={Price} />
                                     <Route path="/pages/comingsoon" component={Price} />
-
+                                    <Route path="/application/login"  
+                                    render={(props) => authed == false
+                                     ? <AuthLogin {...props} />
+                                     : <Redirect to={{pathname: '/dashboard/default', state: {from: props.location}}} />} />
                                     <Route path="/dashboard/default"  
                                     render={(props) => authed == true
                                      ? <DashboardDefault {...props} />

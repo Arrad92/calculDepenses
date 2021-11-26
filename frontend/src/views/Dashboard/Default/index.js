@@ -19,6 +19,8 @@ import ReportCard from './ReportCard';
 import LatestorderCard from './LatestorderCard';
 
 import { gridSpacing } from './../../../store/constant';
+import DepensesTable from './DepensesTable';
+import { Form } from 'react-final-form';
 
 const useStyles = makeStyles((theme) => ({
     arrowicon: {
@@ -267,13 +269,15 @@ const Default = () => {
                 </Grid>
             </Grid> */}
             <Grid item xs={12}>
+                
                 <LatestorderCard title="Produits" />
+                
             </Grid>
             <Grid item xs={12}>
-                <LatestorderCard title="Commandes" />
+                <DepensesTable title="Commandes" />
             </Grid>
             <Grid item xs={12}>
-                <LatestorderCard title="Dépenses" />
+                {/* <LatestorderCard title="Dépenses" /> */}
             </Grid>
             
         </Grid>

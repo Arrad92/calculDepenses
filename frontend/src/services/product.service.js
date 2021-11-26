@@ -16,6 +16,20 @@ export const ProductService = ()=>{
       });
 
     }
+    const createProduct = (product)=>{
+      return axios
+      .post(API_URL + "create", product,{ headers: authHeader() })
+      .then(response => {
+        return response.data;
+      });
+    }
+    const deleteProduct = (id)=>{
+      return axios
+      .post(API_URL + "delete?id="+id, {},{ headers: authHeader() })
+      .then(response => {
+        return response.data;
+      });
+    }
 
-    return {listProducts};
+    return {listProducts,createProduct,deleteProduct};
 }

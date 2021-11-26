@@ -18,9 +18,21 @@ public class ProduitServiceImpl implements ProduitService {
 
         return produitRepository.save(produit);
     }
+    @Override
+    public Produit updateProduit(Produit produit) {
+
+        return produitRepository.save(produit);
+    }
 
     @Override
     public List<Produit> listProduit() {
+
         return produitRepository.findAll();
+    }
+
+    public void deleteProduct(Long id){
+        Produit prd= new Produit();
+        prd.setId(id);
+        produitRepository.delete(prd);
     }
 }

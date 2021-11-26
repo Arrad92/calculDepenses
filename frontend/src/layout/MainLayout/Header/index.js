@@ -8,7 +8,7 @@ import Customization from './Customization';
 import ProfileSection from './ProfileSection';
 import NotificationSection from './NotificationSection';
 
-import logo from './../../../assets/images/logo.svg';
+import logo from './../../../assets/images/exphandle.png';
 import { drawerWidth } from './../../../store/constant';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,8 +45,8 @@ const Header = (props) => {
                 <Grid container justify="space-between" alignItems="center">
                     <Hidden smDown>
                         <Grid item>
-                            <Box mt={0.5}>
-                                <img src={logo} alt="Logo" />
+                            <Box mt={0.2}>
+                                <img style={{width:'150px',height:'50px'}}src={logo} alt="Logo" />
                             </Box>
                         </Grid>
                     </Hidden>

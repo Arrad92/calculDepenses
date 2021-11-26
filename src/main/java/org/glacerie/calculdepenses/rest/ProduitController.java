@@ -4,10 +4,7 @@ import org.glacerie.calculdepenses.dao.Produit;
 import org.glacerie.calculdepenses.dao.User;
 import org.glacerie.calculdepenses.services.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,4 +24,16 @@ public class ProduitController {
     public List<Produit> listProduit(){
         return produitService.listProduit();
     }
+
+    @PostMapping("/delete")
+    public String deleteProduit (@RequestParam Long id){
+            try{
+                produitService.deleteProduct(id);
+                return "success";
+            }catch(Exception e){
+                return e.getMessage();
+            }
+    }
+
+
 }
