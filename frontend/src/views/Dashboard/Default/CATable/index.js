@@ -143,8 +143,9 @@ export default function CATable() {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Id</TableCell>
-                                        <TableCell>Date</TableCell>
                                         <TableCell>Montant</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        
                                         <TableCell>Actions</TableCell>
                                         <IconButton onClick={()=>{setOpen(true)}}>+</IconButton>
                                     </TableRow>
