@@ -269,18 +269,18 @@ const Default = () => {
                     </Grid>
                 </Grid>
             </Grid> */}
-            <Grid item xs={12}>
-                
-                <LatestorderCard title="Produits" />
-                
-            </Grid>
+            
             <Grid item xs={12}>
                 <DepensesTable title="Commandes" />
             </Grid>
             <Grid item xs={12}>
                  <CATable title="Dépenses" /> 
             </Grid>
-            
+            <Grid item xs={12}>
+                
+                <LatestorderCard title="Produits" />
+                
+            </Grid>
         </Grid>
     );
 };
