@@ -13,7 +13,14 @@ export const DepenseService = ()=>{
       },{ headers: authHeader() })
       .then(response => {
         return response.data;
-      });
+      }).catch((err)=>{
+          
+        if(err.response.status == 403){
+            localStorage.removeItem("user");
+          return 403;
+        }
+      console.log(err);
+  });
 
     }
     const createDepense = (product)=>{
@@ -21,14 +28,28 @@ export const DepenseService = ()=>{
       .post(API_URL + "create", product,{ headers: authHeader() })
       .then(response => {
         return response.data;
-      });
+      }).catch((err)=>{
+          
+        if(err.response.status == 403){
+            localStorage.removeItem("user");
+          return 403;
+        }
+      console.log(err);
+  });
     }
     const deleteDepense = (id)=>{
       return axios
       .post(API_URL + "delete?id="+id, {},{ headers: authHeader() })
       .then(response => {
         return response.data;
-      });
+      }).catch((err)=>{
+          
+        if(err.response.status == 403){
+            localStorage.removeItem("user");
+          return 403;
+        }
+      console.log(err);
+  });
     }
 
     return {listDepenses,createDepense,deleteDepense};

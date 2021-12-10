@@ -42,6 +42,7 @@ import { ProductService } from '../../../../services/product.service';
 import { Field, Form } from 'react-final-form';
 import { DepenseService } from '../../../../services/depense.service';
 import ConfirmModal from '../LatestorderCard/confirmModal';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
     table: {
@@ -66,6 +67,7 @@ export default function DepensesTable() {
     const [idToDelete,setIdToDelete] = useState(null);
     const [editRow,setEditRow] = useState(null);
     const [formInit,setFormInit] = useState(false);
+    const history = useHistory();
     const style = {
         position: 'absolute',
         top: '50%',
@@ -79,8 +81,12 @@ export default function DepensesTable() {
       };
     useEffect(()=>{
         if(authed){
-            productService.listProducts().then(setProducts);
-            depenseService.listDepenses().then(setRows);
+            productService.listProducts().then(setProducts).catch((err)=>{
+                if(err == 403) history.push("/application/login");
+            });
+            depenseService.listDepenses().then(setRows).catch((err)=>{
+                if(err == 403) history.push("/application/login");
+            });
         }
     },[authed]);
     
@@ -106,6 +112,8 @@ export default function DepensesTable() {
                 setEditRow(null);
             }
             setOpen(false);
+        }).catch((err)=>{
+            if(err == 403) history.push("/application/login");
         });
     }
     const deleteDepense = (id)=>{
@@ -114,8 +122,8 @@ export default function DepensesTable() {
             let actualRows = rows;
             setRows(actualRows.filter((elt)=>elt.id != id));
         }).catch((err)=>{
-            console.log("erroor",err);
-        })
+            if(err == 403) history.push("/application/login");
+        });
         console.log("id",id);
     }
     return (
@@ -146,7 +154,7 @@ export default function DepensesTable() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {rows.map((row, index) =>{ 
+                                    {rows?.map((row, index) =>{ 
                                         
                                         return (
                                         <TableRow key={index}>

@@ -39,8 +39,10 @@ import Phone3 from './../../../../assets/images/widget/PHONE3.jpg';
 import Phone4 from './../../../../assets/images/widget/PHONE4.jpg';
 import { useAuthed } from '../../../../hooks/useAuthed';
 import { ProductService } from '../../../../services/product.service';
-import { Field, Form, useForm } from 'react-final-form';
-import ConfirmModal from './confirmModal';
+import { Field, Form } from 'react-final-form';
+import { DepenseService } from '../../../../services/depense.service';
+import ConfirmModal from '../LatestorderCard/confirmModal';
+import { CAService } from '../../../../services/ca.service';
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
@@ -54,17 +56,19 @@ const useStyles = makeStyles({
 });
 
 
-export default function LatestorderCard() {
+export default function CATable() {
     const classes = useStyles();
     const [rows,setRows] = useState([]);
+    const [products,setProducts] = useState([]);
     const authed = useAuthed();
-    const productService = ProductService();
+    const caService = CAService();
     const [open,setOpen] = useState(false);
     const [openConfirmModal,setOpenConfirmModal] = useState(false);
     const [idToDelete,setIdToDelete] = useState(null);
     const [editRow,setEditRow] = useState(null);
     const [formInit,setFormInit] = useState(false);
     const history = useHistory();
+    
     const style = {
         position: 'absolute',
         top: '50%',
@@ -78,17 +82,23 @@ export default function LatestorderCard() {
       };
     useEffect(()=>{
         if(authed){
-            productService.listProducts().then(setRows).catch((err)=>{
+            caService.listCA().then(setRows).catch((err)=>{
                 if(err == 403) history.push("/application/login");
             });
+           
         }
     },[authed]);
+    
     const handleClose = ()=>{
         setOpen(false);
     }
-    const addProduct = (values)=>{
-        console.log("addproudct",values);
-        productService.createProduct(values).then((res)=>{
+    const addDepense= (values)=>{
+        let produitId = values.produit;
+        values.produit = {};
+        values.produit.id = produitId;
+       
+
+        caService.createCA(values).then((res)=>{
             let actualRows = rows;
             if(!editRow) {
                 actualRows.push(res);
@@ -105,10 +115,9 @@ export default function LatestorderCard() {
             if(err == 403) history.push("/application/login");
         });
     }
-    
-    const deleteProduct = (id)=>{
+    const deleteCa = (id)=>{
 
-        productService.deleteProduct(id).then((res)=>{
+        caService.deleteCA(id).then((res)=>{
             let actualRows = rows;
             setRows(actualRows.filter((elt)=>elt.id != id));
         }).catch((err)=>{
@@ -116,7 +125,6 @@ export default function LatestorderCard() {
         });
         console.log("id",id);
     }
-
     return (
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
@@ -124,7 +132,7 @@ export default function LatestorderCard() {
                     <CardHeader
                         title={
                             <Typography component="div" className="card-header">
-                                Produits
+                                Depenses
                             </Typography>
                         }
                     />
@@ -135,11 +143,8 @@ export default function LatestorderCard() {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Id</TableCell>
-                                        <TableCell>Nom</TableCell>
-                                        <TableCell>Type</TableCell>
-                                        <TableCell>Marque</TableCell>
-                                        <TableCell>Prix</TableCell>
-                                        <TableCell>Unité</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Montant</TableCell>
                                         <TableCell>Actions</TableCell>
                                         <IconButton onClick={()=>{setOpen(true)}}>+</IconButton>
                                     </TableRow>
@@ -150,18 +155,16 @@ export default function LatestorderCard() {
                                         return (
                                         <TableRow key={index}>
                                             <TableCell>{row.id}</TableCell>
-                                            <TableCell>{row.nom}</TableCell>
+                                            <TableCell>{row.amountRevenu}</TableCell>
                                             <TableCell>
-                                            {row.type}
+                                            {row.dateRevenu}
                                             </TableCell>
-                                            <TableCell>{row.marque}</TableCell>
-                                            <TableCell>{row.prix}</TableCell>
-                                            <TableCell>{row.unité}</TableCell>
+                                            
                                             {/* <TableCell>
                                                 <Chip color={row.statuscolor} label={row.status} size="small" />
                                             </TableCell> */}
                                             <TableCell>
-                                                <IconButton color="primary">
+                                            <IconButton color="primary">
                                                     <EditOutlinedIcon onClick={()=>{
                                                         
                                                         setEditRow(row);
@@ -196,7 +199,7 @@ export default function LatestorderCard() {
                 aria-describedby="modal-modal-description"
                 >
                 <Box sx={style}>
-                    <Form onSubmit={addProduct}>
+                    <Form onSubmit={addDepense}>
                                     {({
                                         handleSubmit,
                                         invalid,
@@ -206,60 +209,28 @@ export default function LatestorderCard() {
                                         form,
                                         ...otherProps
                                          })=>{
-                                             if(editRow && formInit ){
-                                                form.change('nom',editRow?editRow.nom:'');
-                                             form.change('marque',editRow?editRow.marque:'');
-                                             form.change('prix',editRow?editRow.prix:'');
-                                             form.change('type',editRow?editRow.type:'');
-                                             form.change('unité',editRow?editRow.unité:'');
+                                            if(editRow && formInit ){
+                                                
+                                             form.change('amountRevenu',editRow?editRow.amountRevenu:'');
+                                             
+                                             
+                                             form.change('dateRevenu',
+                                             editRow ?
+                                             new Date(editRow.dateRevenu).getFullYear() +'-'+(new Date(editRow.dateDepense).getMonth()+1) +'-'+ new Date(editRow.dateDepense).getDate():'');
+                                             
                                              form.change('id',editRow?editRow.id:''); 
                                              setFormInit(false);
                                              }
-                                              
-                                             
-                                            return (
+                                             return(
                                             <form onSubmit={handleSubmit}>
-                                                <Field name="nom" >
-                                            {({ input, meta }) => {
-                                                console.log("input value",input.value);
-                                                return (
                                                 
-                                            <TextField
-                                                fullWidth
-                                                autoFocus
-                                                label="Nom du produit"
-                                                margin="normal"
-                                                name="nom"
-                                                type="text"
-                                                variant="outlined"
-                                                 {...input} 
-                                                
-                                            />
-                                            )}
-                                            }
-                                            </Field>
-                                            <Field name="marque">
+                                            <Field name="amountRevenu">
                                             {({ input, meta }) => (
                                                 <TextField
                                                 fullWidth
-                                                label="Marque du produit"
+                                                label="Montant"
                                                 margin="normal"
-                                                name="marque"
-                                                type="text"
-                                                defaultValue=""
-                                                variant="outlined"
-                                                {...input}
-                                                
-                                            />
-                                            )}
-                                            </Field>
-                                            <Field name="prix">
-                                            {({ input, meta }) => (
-                                                <TextField
-                                                fullWidth
-                                                label="Prix du produit"
-                                                margin="normal"
-                                                name="prix"
+                                                name="amountRevenu"
                                                 type="number"
                                                 defaultValue=""
                                                 variant="outlined"
@@ -268,14 +239,15 @@ export default function LatestorderCard() {
                                             />
                                             )}
                                             </Field>
-                                            <Field name="type">
+
+                                            <Field name="dateRevenu">
                                             {({ input, meta }) => (
                                                 <TextField
                                                 fullWidth
-                                                label="Type du produit"
+                                                label="Date"
                                                 margin="normal"
-                                                name="type"
-                                                type="text"
+                                                name="dateRevenu"
+                                                type="date"
                                                 defaultValue=""
                                                 variant="outlined"
                                                 {...input}
@@ -283,30 +255,7 @@ export default function LatestorderCard() {
                                             />
                                             )}
                                             </Field>
-                                             <Field name="unité"> 
-                                             {({ input, meta }) => ( 
-                                               
-                                                
-                                               <Box sx={{ minWidth: 120 }}>
-                                            <FormControl fullWidth>
-                                            <InputLabel id="demo-simple-select-label">Unité</InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-label"
-                                                id="unité"
-                                                
-                                                label="Unité (Kg / L / Piece)"
-                                                 {...input} 
-                                            >
-                                                <MenuItem value={"Kilogramme"}>Kilogramme</MenuItem>
-                                                <MenuItem value={"Litre"}>Litre</MenuItem>
-                                                <MenuItem value={"Piece"}>Piece</MenuItem>
-                                            </Select>
-                                            </FormControl>
-                                            </Box>
-                                            
-                                              )}
-                                               
-                                             </Field>  
+                                             
                                              
                                             <Divider />
                                             <Button
@@ -321,7 +270,7 @@ export default function LatestorderCard() {
                 </Box>
             </Modal>
             <ConfirmModal open={openConfirmModal} okCallback={(param)=>{
-                if(param && idToDelete != null) {deleteProduct(idToDelete);setOpenConfirmModal(false);}
+                if(param && idToDelete != null) {deleteCa(idToDelete);setOpenConfirmModal(false);}
                 else setOpenConfirmModal(false);
             }}></ConfirmModal>
         </Grid>

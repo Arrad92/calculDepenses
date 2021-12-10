@@ -9,6 +9,7 @@ import LockOpenTwoTone from '@material-ui/icons/LockOpenTwoTone';
 import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import MeetingRoomTwoToneIcon from '@material-ui/icons/MeetingRoomTwoTone';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,12 +44,14 @@ const ProfileSection = () => {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
-
+    const history = useHistory();
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
-        if (index === 4) {
+        /* if (index === 4) { */
             //handleLogout;
-        }
+            history.push("/application/login");
+            localStorage.removeItem("user");
+        /* } */
     };
 
     const handleToggle = () => {
@@ -138,7 +141,7 @@ const ProfileSection = () => {
                                         </ListItemIcon>
                                         <ListItemText primary="Lock Screen" />
                                     </ListItem> */}
-                                    <ListItem button selected={selectedIndex === 4}>
+                                    <ListItem button onClick={handleListItemClick} selected={selectedIndex === 4}>
                                         <ListItemIcon>
                                             <MeetingRoomTwoToneIcon />
                                         </ListItemIcon>

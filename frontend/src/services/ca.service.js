@@ -1,13 +1,12 @@
-
 import axios from 'axios';
 import {host} from '../././const.js'
 import authHeader from './auth-header.js';
 
-const API_URL = host+"Produit/";
-export const ProductService = ()=>{
-    
-    const listProducts = ()=>{
-    return axios
+const API_URL = host+"Revenu/";
+export const CAService = ()=>{
+
+    const listCA = ()=>{
+        return axios
       .post(API_URL + "all", {
         
       },{ headers: authHeader() })
@@ -15,17 +14,16 @@ export const ProductService = ()=>{
         return response.data;
       }).catch((err)=>{
           
-        if(err.response.status == 403){
-            localStorage.removeItem("user");
-          return 403;
-        }
-      console.log(err);
-  });
-
+          if(err.response.status == 403){
+              localStorage.removeItem("user");
+            return 403;
+          }
+        console.log(err);
+    });
     }
-    const createProduct = (product)=>{
-      return axios
-      .post(API_URL + "create", product,{ headers: authHeader() })
+    const createCA = (ca)=>{
+        return axios
+      .post(API_URL + "create", ca,{ headers: authHeader() })
       .then(response => {
         return response.data;
       }).catch((err)=>{
@@ -35,10 +33,10 @@ export const ProductService = ()=>{
           return 403;
         }
       console.log(err);
-  });
+  });;
     }
-    const deleteProduct = (id)=>{
-      return axios
+    const deleteCA = (id)=>{
+        return axios
       .post(API_URL + "delete?id="+id, {},{ headers: authHeader() })
       .then(response => {
         return response.data;
@@ -52,5 +50,6 @@ export const ProductService = ()=>{
   });
     }
 
-    return {listProducts,createProduct,deleteProduct};
+    return {listCA,createCA,deleteCA};
+
 }

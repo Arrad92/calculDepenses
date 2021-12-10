@@ -20,6 +20,7 @@ import LatestorderCard from './LatestorderCard';
 
 import { gridSpacing } from './../../../store/constant';
 import DepensesTable from './DepensesTable';
+import CATable from './CATable';
 import { Form } from 'react-final-form';
 
 const useStyles = makeStyles((theme) => ({
@@ -277,7 +278,7 @@ const Default = () => {
                 <DepensesTable title="Commandes" />
             </Grid>
             <Grid item xs={12}>
-                {/* <LatestorderCard title="Dépenses" /> */}
+                 <CATable title="Dépenses" /> 
             </Grid>
             
         </Grid>

@@ -33,7 +33,7 @@ const Routes = () => {
             <Suspense fallback={<Loader />}>
                 <Switch>
                     <Redirect exact from="/" to="/dashboard/default" />
-                    <Route path={['/application/login']}>
+                     <Route path={['/application/login']}>
                         <MinimalLayout>
                             <Switch location={location} key={location.pathname}>
                                 <NavMotion>
@@ -41,7 +41,7 @@ const Routes = () => {
                                 </NavMotion>
                             </Switch>
                         </MinimalLayout>
-                    </Route>
+                    </Route> 
                     <Route
                         path={[
                             '/register',
@@ -51,7 +51,7 @@ const Routes = () => {
                             '/pages/error/error1',
                             '/pages/error/error2',
                             '/pages/comingsoon',
-
+                            '/application/login',
                             '/dashboard/default',
                             '/widget/statistic',
                             '/widget/data',
