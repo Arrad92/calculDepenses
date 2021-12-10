@@ -132,7 +132,7 @@ export default function CATable() {
                     <CardHeader
                         title={
                             <Typography component="div" className="card-header">
-                                Depenses
+                                Chiffres d'affaires
                             </Typography>
                         }
                     />
