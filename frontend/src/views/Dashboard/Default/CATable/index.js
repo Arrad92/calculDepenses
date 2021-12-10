@@ -216,7 +216,7 @@ export default function CATable() {
                                              
                                              form.change('dateRevenu',
                                              editRow ?
-                                             new Date(editRow.dateRevenu).getFullYear() +'-'+(new Date(editRow.dateDepense).getMonth()+1) +'-'+ new Date(editRow.dateDepense).getDate():'');
+                                             new Date(editRow.dateRevenu).getFullYear() +'-'+(new Date(editRow.dateRevenu).getMonth()+1) +'-'+ new Date(editRow.dateRevenu).getDate():'');
                                              
                                              form.change('id',editRow?editRow.id:''); 
                                              setFormInit(false);
