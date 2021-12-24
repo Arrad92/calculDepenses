@@ -22,6 +22,7 @@ import { gridSpacing } from './../../../store/constant';
 import DepensesTable from './DepensesTable';
 import CATable from './CATable';
 import { Form } from 'react-final-form';
+import DateTable from './CATable/dateTable';
 
 const useStyles = makeStyles((theme) => ({
     arrowicon: {
@@ -269,13 +270,14 @@ const Default = () => {
                     </Grid>
                 </Grid>
             </Grid> */}
+            <Grid item xs={12}>
+                 <DateTable  /> 
+            </Grid>
             
             <Grid item xs={12}>
-                <DepensesTable title="Commandes" />
+                <DepensesTable  />
             </Grid>
-            <Grid item xs={12}>
-                 <CATable title="Dépenses" /> 
-            </Grid>
+            
             <Grid item xs={12}>
                 
                 <LatestorderCard title="Produits" />

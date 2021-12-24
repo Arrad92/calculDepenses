@@ -44,6 +44,7 @@ import { DepenseService } from '../../../../services/depense.service';
 import ConfirmModal from '../LatestorderCard/confirmModal';
 import { CAService } from '../../../../services/ca.service';
 import { useHistory } from 'react-router';
+import DateTable from './dateTable';
 
 const useStyles = makeStyles({
     table: {
@@ -192,6 +193,9 @@ export default function CATable() {
                         
                     </CardActions>
                 </Card>
+            </Grid>
+            <Grid>
+             <DateTable classes={classes}/>
             </Grid>
             <Modal
                 open={open}
