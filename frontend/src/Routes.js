@@ -8,12 +8,16 @@ import MainLayout from './layout/MainLayout';
 import MinimalLayout from './layout/MinimalLayout';
 import {useAuthed} from './hooks/useAuthed.js';
 
+
+
 const AuthLogin = lazy(() => import('./views/Login'));
 
 const Price = lazy(() => import('./views/Application/Price/Price2'));
 
 const DashboardDefault = lazy(() => import('./views/Dashboard/Default'));
-
+const LatestorderCard = lazy(() => import('./views/Dashboard/Default/LatestorderCard'));
+const DepensesTable = lazy(() => import('./views/Dashboard/Default/DepensesTable'));
+const DateTable = lazy(() => import('./views/Dashboard/Default/CATable/dateTable'));
 const RtlLayout = lazy(() => import('./views/RtlLayout'));
 
 const TableBasic = lazy(() => import('./views/Tables/TableBasic'));
@@ -46,6 +50,9 @@ const Routes = () => {
                         path={[
                             '/register',
                             '/application/register',
+                            '/produits',
+                            '/depenses',
+                            '/CA',
                             '/forgot-password',
                             '/application/forgot-password',
                             '/pages/error/error1',
@@ -155,6 +162,15 @@ const Routes = () => {
                                     <Route path="/dashboard/default"  
                                     render={(props) => authed == true
                                      ? <DashboardDefault {...props} />
+                                     : <Redirect to={{pathname: '/application/login', state: {from: props.location}}} />} />
+                                    <Route path="/produits" render={(props) => authed == true
+                                     ? <LatestorderCard {...props} />
+                                     : <Redirect to={{pathname: '/application/login', state: {from: props.location}}} />} />
+                                     <Route path="/depenses" render={(props) => authed == true
+                                     ? <DepensesTable {...props} />
+                                     : <Redirect to={{pathname: '/application/login', state: {from: props.location}}} />} />
+                                     <Route path="/CA" render={(props) => authed == true
+                                     ? <DateTable {...props} />
                                      : <Redirect to={{pathname: '/application/login', state: {from: props.location}}} />} />
                                     <Route path="/utils/util-typography" component={UtilsTypography} />
                                     <Route path="/multi-language" component={MultiLanguage} />

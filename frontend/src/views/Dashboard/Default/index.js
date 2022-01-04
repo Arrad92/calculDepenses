@@ -64,7 +64,7 @@ const Default = () => {
 
     return (
         <Grid container spacing={gridSpacing}>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
                     <Grid item lg={3} sm={6} xs={12}>
                         <ReportCard
@@ -269,20 +269,8 @@ const Default = () => {
                         </Card>
                     </Grid>
                 </Grid>
-            </Grid> */}
-            <Grid item xs={12}>
-                 <DateTable  /> 
             </Grid>
-            
-            <Grid item xs={12}>
-                <DepensesTable  />
-            </Grid>
-            
-            <Grid item xs={12}>
-                
-                <LatestorderCard title="Produits" />
-                
-            </Grid>
+           
         </Grid>
     );
 };

@@ -20,6 +20,7 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
+    MenuList,
 } from '@material-ui/core';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -43,7 +44,9 @@ import { Field, Form } from 'react-final-form';
 import { DepenseService } from '../../../../services/depense.service';
 import ConfirmModal from '../LatestorderCard/confirmModal';
 import { useHistory } from 'react-router';
+import CustomAutocomplete from './autocomplete';
 
+ 
 const useStyles = makeStyles({
     table: {
         minWidth: 350,
@@ -67,6 +70,11 @@ export default function DepensesTable() {
     const [idToDelete,setIdToDelete] = useState(null);
     const [editRow,setEditRow] = useState(null);
     const [formInit,setFormInit] = useState(false);
+    const [productValue,setProductValue] = useState();
+    const [selectedProduct,setSelectedProduct] = useState();
+    const [selectedProductId,setSelectedProductId] = useState();
+    const [suggestionList,setSuggestionList] = useState([]);
+    const [showAutoCompleteList,setShowAutoCompleteList] = useState(false);
     const history = useHistory();
     const style = {
         position: 'absolute',
@@ -94,6 +102,7 @@ export default function DepensesTable() {
         setOpen(false);
     }
     const addDepense= (values)=>{
+        
         let produitId = values.produit;
         values.produit = {};
         values.produit.id = produitId;
@@ -125,6 +134,21 @@ export default function DepensesTable() {
             if(err == 403) history.push("/application/login");
         });
         console.log("id",id);
+    }
+    const productOnChange = (evt)=>{
+            console.log("onChange");
+            
+    }
+    const productOnFocus = ()=>{
+        console.log("onFocus")
+            setShowAutoCompleteList(true);
+    }
+    const productOnBlur = (evt)=>{
+        console.log("onBlur")
+        if(!products.find((elt)=>elt.nom == selectedProduct))setSelectedProduct('');
+        setShowAutoCompleteList(false);
+        evt.preventDefault();
+
     }
     return (
         <Grid container spacing={gridSpacing}>
@@ -172,10 +196,10 @@ export default function DepensesTable() {
                                             <TableCell>
                                             <IconButton color="primary">
                                                     <EditOutlinedIcon onClick={()=>{
-                                                        
+                                                        setOpen(true);
                                                         setEditRow(row);
                                                         setFormInit(true);
-                                                        setOpen(true);
+                                                        
                                                     
                                                         }}/>
                                                 </IconButton>
@@ -215,8 +239,12 @@ export default function DepensesTable() {
                                         form,
                                         ...otherProps
                                          })=>{
+                                             
                                             if(editRow && formInit ){
                                                 form.change('produit',editRow?editRow.produit.id:'');
+                                                
+                                            setSelectedProduct(editRow.produit.nom);
+                                            setSelectedProductId(editRow.produit.id);
                                              form.change('quantity',editRow?editRow.quantity:'');
                                              form.change('totalPrice',editRow?editRow.totalPrice:'');
                                              
@@ -232,20 +260,71 @@ export default function DepensesTable() {
                                                 <Field name="produit">
                                             {({ input, meta }) => (
                                             <Box sx={{ minWidth: 120 }}>
+
                                             <FormControl fullWidth>
-                                            <InputLabel id="demo-simple-select-label">Produit</InputLabel>
-                                            <Select
+                                            {/* <InputLabel id="demo-simple-select-label">Produit</InputLabel> */}
+                                            {  (<CustomAutocomplete initialValue = {editRow?editRow.produit?editRow.produit.id:'':''} initialInputValue={editRow?editRow.produit?editRow.produit.nom:'':''} form={form} products={products}></CustomAutocomplete>)}
+                                            {/* <TextField 
+                                            id="produit_nom"
+                                            margin="normal"
+                                                name="quantity"
+                                                type="text"
+                                                defaultValue=""
+                                                variant="outlined"
+                                                   
+                                            label="Produit"
+                                            onFocus = {productOnFocus}
+                                            onBlur={productOnBlur}
+                                            onChange={(evt)=>setSelectedProduct(evt.target.value)}
+                                            value={selectedProduct}
+                                            autoComplete="off"
+                                            >
+                                                
+                                            </TextField> */}
+                                            <input
+                                            id="produit"
+                                            
+                                            {...input}
+                                            
+                                            type="hidden"
+                                            />
+                                            <div>
+
+                                            </div>
+
+                                            
+                                            {/* {showAutoCompleteList && (
+                                            <MenuList
+                                            
+                                            >
+                                            { products.filter((elt)=> elt.nom.toLowerCase().startsWith(selectedProduct?.toLowerCase()) || !selectedProduct || selectedProduct =="" ).map((product)=>(
+                                                <MenuItem
+                                                onMouseDown={(evt)=>{
+                                                    
+                                                    console.log(evt.target.innerText);
+                                                    form.change("produit",evt.target.value);
+                                                    setSelectedProduct(evt.target.innerText);
+                                            } }
+                                                value={product.id}
+                                                name={product.nom}>{product.nom}</MenuItem>
+                                            ))}
+                                            </MenuList>
+                                            
+                                            )} */}
+                                            
+                                             
+                                            {/* <Select
                                                 labelId="demo-simple-select-label"
                                                 id="produit"
                                                 
                                                 label="Produit"
-                                                 {...input} 
+                                                 
                                             > 
                                            { products.map((product)=>(
                                                 <MenuItem value={product.id}>{product.nom}</MenuItem>
                                             ))}
                                                 
-                                            </Select>
+                                            </Select> */}
                                             </FormControl>
                                             </Box>
                                             )}

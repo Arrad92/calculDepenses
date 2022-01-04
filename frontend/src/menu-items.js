@@ -82,8 +82,8 @@ export default {
     items: [
         {
             id: 'navigation',
-            title: 'Materially',
-            caption: 'Dashboard & Widgets',
+            title: 'Handle Your Expenses',
+            caption: 'Dashboard',
             type: 'group',
             icon: icons['NavigationOutlinedIcon'],
             children: [
@@ -95,16 +95,18 @@ export default {
                     url: '/dashboard/default',
                 },
                 {
-                    id: 'widget',
-                    title: 'Widget',
-                    type: 'collapse',
+                    id: 'produits',
+                    title: 'produits',
                     icon: icons['CardGiftcardOutlinedIcon'],
-                    chip: {
+                    url:"/produits",
+                    type: 'item'
+
+                    /* chip: {
                         label: 'Pro',
                         error: true,
                         size: 'small',
-                    },
-                    children: [
+                    } ,*/
+/*                     children: [
                         {
                             id: 'statistic',
                             title: 'Statistic',
@@ -123,19 +125,34 @@ export default {
                             type: 'item',
                             url: '/widget/chart',
                         },
-                    ],
+                    ], */
                 },
                 {
+                    id: 'depenses',
+                    title: 'Depenses',
+                    icon: icons['CardGiftcardOutlinedIcon'],
+                    url:"/depenses",
+                    type: 'item' 
+                },
+                {
+                    id: 'CA',
+                    title: "Chiffres d'affaires",
+                    icon: icons['CardGiftcardOutlinedIcon'],
+                    url:"/CA",
+                    type: 'item'
+                }
+                
+                /* {
                     id: 'rtl',
                     title: 'RTL Layout',
                     type: 'item',
                     icon: icons['FormatListNumberedRtlIcon'],
                     url: '/rtl',
                     target: true,
-                },
+                }, */
             ],
         },
-        {
+        /* {
             id: 'application',
             title: 'Application',
             caption: 'Prebuild Application',
@@ -1079,6 +1096,6 @@ export default {
                     },
                 },
             ],
-        },
+        }, */
     ],
 };

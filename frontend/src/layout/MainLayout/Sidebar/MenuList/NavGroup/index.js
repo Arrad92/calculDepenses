@@ -18,7 +18,7 @@ const NavGroup = (props) => {
     const { item } = props;
     const classes = useStyles();
 
-    const items = item.children.map((menu) => {
+    const items = item.children?.map((menu) => {
         switch (menu.type) {
             case 'collapse':
                 return <NavCollapse key={menu.id} menu={menu} level={1} />;
